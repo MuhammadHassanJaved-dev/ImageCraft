@@ -1,59 +1,72 @@
+'use client';
+
 import Link from 'next/link';
 
-export const metadata = {
-  title: "Home",
-  icons: {
-    icon: "/image.png",
-  },
-};
-
-function Home() {
+export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-      
-      <main className="px-6 text-center max-w-4xl">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 flex items-center justify-center">
 
-        {/* HERO */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 leading-tight">
-          Transform Your Images <br /> Effortlessly
-        </h1>
+      {/* Background Glows */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
 
-        <p className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-600">
-          Compress, remove backgrounds, and convert image formats using
-          AI-powered tools. Fast. Simple. Free.
-        </p>
+      <div className="absolute top-40 right-20 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
 
-        {/* GLASS BUTTON */}
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/Features"
-            className="relative px-12 py-4 text-lg font-semibold text-white rounded-xl
-            bg-indigo-600/80 backdrop-blur-md shadow-lg
-            hover:bg-white/30 hover:text-indigo-900
-            hover:backdrop-blur-xl hover:ring-2 hover:ring-white/50
-            transition-all duration-300"
-          >
-            Get Started
-          </Link>
+      <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+
+      <main className="relative z-10 px-6 text-center max-w-5xl">
+
+        <div className="inline-block px-4 py-2 rounded-full border border-cyan-500/30 bg-white/5 backdrop-blur-sm text-cyan-300 text-sm font-medium mb-6">
+          🚀 AI-Powered Image Tools
         </div>
 
-        {/* TRUST / STATS */}
-        <div className="mt-12 flex flex-wrap justify-center gap-10 text-gray-700">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white leading-tight">
+          Transform Images
+          <br />
+          With AI Precision
+        </h1>
 
-          <div className="text-center">
-            <h3 className="text-3xl font-bold text-indigo-600">500+</h3>
-            <p className="text-sm mt-1">Images Converted</p>
-          </div>
+        <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+          Compress, remove backgrounds, convert image formats, and enhance
+          images instantly with powerful AI-driven tools.
+        </p>
 
-          <div className="text-center">
-            <h3 className="text-3xl font-bold text-indigo-600">99.9%</h3>
-            <p className="text-sm mt-1">Accuracy Rate</p>
-          </div>
+        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
 
-          <div className="text-center">
-            <h3 className="text-3xl font-bold text-indigo-600">100%</h3>
-            <p className="text-sm mt-1">Free to Use</p>
-          </div>
+          <Link
+            href="/dashboard"
+            className="
+              px-8 py-4
+              rounded-xl
+              text-white
+              font-semibold
+              bg-gradient-to-r
+              from-cyan-500
+              to-blue-600
+              hover:scale-105
+              transition-all
+              duration-300
+              shadow-lg
+            "
+          >
+            Start Creating
+          </Link>
+
+          <Link
+            href="/Features"
+            className="
+              px-8 py-4
+              rounded-xl
+              border
+              border-white/10
+              bg-white/5
+              backdrop-blur-sm
+              text-white
+              hover:bg-white/10
+              transition-all
+            "
+          >
+            Explore Features
+          </Link>
 
         </div>
 
@@ -61,5 +74,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;

@@ -3,10 +3,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import logo from "../public/image.png";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const navItems = [
     { href: '/', label: 'Home' },
@@ -16,94 +19,135 @@ const NavBar = () => {
   ];
 
   return (
-    <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-      
-          <div className="flex items-center gap-3">
-            <Image
-              src={logo}
-              alt="ImageTools Logo"
-              width={42}
-              height={42}
-              className="rounded-md"
-            />
-            <span className="text-xl font-extrabold text-gray-900 tracking-tight">
-              Image<span className="text-indigo-600">Tools</span>
-            </span>
-          </div>
+    <>
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-violet-500/20">
+        <div className="max-w-7xl mx-auto px-5">
+          <div className="flex items-center justify-between h-16">
 
-        
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="relative text-lg font-medium text-black hover:text-indigo-600 transition
-                           after:content-[''] after:absolute after:w-0 after:h-0.5
-                           after:bg-indigo-600 after:left-0 after:-bottom-1
-                           hover:after:w-full after:transition-all after:duration-300"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+            {/* LOGO */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 group"
+            >
+              <div className="relative">
+                <Image
+                  src={logo}
+                  alt="ImageCraft Logo"
+                  width={42}
+                  height={42}
+                  className="rounded-lg transition duration-300 group-hover:scale-110"
+                />
 
-          <div className="md:hidden">
+                <div className="absolute inset-0 bg-violet-500 blur-xl opacity-30 group-hover:opacity-60 transition" />
+              </div>
+
+              <span className="text-xl font-bold text-white">
+                Image
+                <span className="text-violet-400">
+                  Craft
+                </span>
+              </span>
+            </Link>
+
+            {/* DESKTOP MENU */}
+            <nav className="hidden md:flex items-center gap-8">
+              {navItems.map((item) => {
+                const active = pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`relative text-sm font-medium transition-all duration-300
+                      ${
+                        active
+                          ? 'text-violet-400'
+                          : 'text-slate-300 hover:text-white'
+                      }
+                    `}
+                  >
+                    {item.label}
+
+                    <span
+                      className={`absolute -bottom-2 left-0 h-[2px] bg-violet-500 transition-all duration-300
+                        ${
+                          active
+                            ? 'w-full'
+                            : 'w-0 group-hover:w-full'
+                        }
+                      `}
+                    />
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* MOBILE BUTTON */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="md:hidden text-white"
             >
-              <span className="sr-only">Open main menu</span>
               {isOpen ? (
-                
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X size={26} />
               ) : (
-                
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <Menu size={26} />
               )}
             </button>
-          </div>
-        </div>
-      </div>
 
-     
-      {isOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-md shadow-md">
-          <div className="px-2 pt-2 pb-4 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-indigo-600 hover:bg-gray-100"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
           </div>
         </div>
-      )}
-    </header>
+      </header>
+
+      {/* OVERLAY */}
+      <div
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden
+          ${
+            isOpen
+              ? 'opacity-100 visible'
+              : 'opacity-0 invisible'
+          }
+        `}
+        onClick={() => setIsOpen(false)}
+      />
+
+      {/* MOBILE DRAWER */}
+      <div
+        className={`fixed top-0 right-0 h-screen w-72 bg-slate-950/95 backdrop-blur-xl border-l border-violet-500/20 z-50
+        transform transition-transform duration-500 ease-out md:hidden
+        ${
+          isOpen
+            ? 'translate-x-0'
+            : 'translate-x-full'
+        }`}
+      >
+        <div className="flex justify-end p-5">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white"
+          >
+            <X size={26} />
+          </button>
+        </div>
+
+        <nav className="flex flex-col px-6 gap-2 mt-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+              className={`px-4 py-3 rounded-xl transition-all duration-300
+              ${
+                pathname === item.href
+                  ? 'bg-violet-600 text-white'
+                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </>
   );
 };
 
