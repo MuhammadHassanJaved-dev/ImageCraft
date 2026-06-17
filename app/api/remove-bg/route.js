@@ -9,7 +9,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
     }
 
-    const API_KEY = 'qso5WrFHLQu2hUtTU5VP7rmX';
+    const API_KEY = process.env.REMOVE_BG_API_KEY;
 
     // Prepare data specifically for the Remove.bg format
     const externalFormData = new FormData();
